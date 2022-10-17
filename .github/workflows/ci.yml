@@ -24,6 +24,13 @@ jobs:
         SIGNING_KEYRINGFILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
       run: ./gradlew checkVariables
 
+    - name: Execute envVariables
+      env:
+        SIGNING_KEYID: ${{ secrets.GPG_PRIVATE_KEY }}
+        SIGNING_PASSWORD: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+        SIGNING_KEYRINGFILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+      run: ./gradlew envVariables
+
     - name: Execute printVariables
       env:
         SIGNING_KEYID: ${{ secrets.GPG_PRIVATE_KEY }}
