@@ -17,10 +17,16 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x ./gradlew
 
-    - name: Execute Gradle build
+    - name: Execute checkVariables
       env:
         SIGNING_KEYID: ${{ secrets.GPG_PRIVATE_KEY }}
         SIGNING_PASSWORD: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
         SIGNING_KEYRINGFILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
-      id: build
       run: ./gradlew checkVariables
+
+    - name: Execute printVariables
+      env:
+        SIGNING_KEYID: ${{ secrets.GPG_PRIVATE_KEY }}
+        SIGNING_PASSWORD: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+        SIGNING_KEYRINGFILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+      run: ./gradlew printVariables
