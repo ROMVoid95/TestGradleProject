@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+	id 'io.github.romvoid95.base' version '1.0.0'
+}
+
+group = 'io.github.romvoid95'
+version = '1.0.0'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:deprecation"
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+
+}
