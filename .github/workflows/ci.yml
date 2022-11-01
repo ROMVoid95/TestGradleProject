@@ -1,39 +1,21 @@
 name: 'CI'
 
-on:
-  workflow_dispatch:
+on: [workflow_dispatch, push]
 
 jobs:
   build:
+    env:
+      RELEASE: ${{ false }}
+      VERSION_SUFFIX: -SNAPSHOT
     name: Build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: 8
-
-    - name: Make gradlew executable
-      run: chmod +x ./gradlew
-
-    - name: Execute checkVariables
+    - name: 'Check If Release'
+      if: startsWith(github.ref, 'refs/tags/')
       env:
-        SIGNING_KEYID: ${{ secrets.GPG_PRIVATE_KEY }}
-        SIGNING_PASSWORD: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
-        SIGNING_KEYRINGFILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
-      run: ./gradlew checkVariables
-
-    - name: Execute envVariables
-      env:
-        SIGNING_KEYID: ${{ secrets.GPG_PRIVATE_KEY }}
-        SIGNING_PASSWORD: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
-        SIGNING_KEYRINGFILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
-      run: ./gradlew envVariables
-
-    - name: Execute printVariables
-      env:
-        SIGNING_KEYID: ${{ secrets.GPG_PRIVATE_KEY }}
-        SIGNING_PASSWORD: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
-        SIGNING_KEYRINGFILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
-      run: ./gradlew printVariables
+        RELEASE: ${{ true }}
+        VERSION_SUFFIX: ${{ null }}
+    - name: 'Check Variables'
+      run: echo ${{ env.RELEASE }} -> ${{ env.VERSION_SUFFIX }}
+    
