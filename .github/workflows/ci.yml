@@ -16,7 +16,12 @@ jobs:
       env:
         RELEASE: ${{ true }}
         VERSION_SUFFIX: ${{ null }}
-      run: echo SOMETHING
+      run: |
+        echo "RELEASE=true" >> $GITHUB_ENV
+        echo "VERSION_SUFFIX=" >> $GITHUB_ENV
     - name: 'Check Variables'
-      run: echo ${{ env.RELEASE }} -> ${{ env.VERSION_SUFFIX }}
+      run: |
+        echo "RELEASE= ${{ env.RELEASE }}"
+        echo "VERSION_SUFFIX= ${{ env.VERSION_SUFFIX }}"
+      
     
