@@ -13,9 +13,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: 'Check If Release'
       if: startsWith(github.ref, 'refs/tags/')
-      env:
-        RELEASE: ${{ true }}
-        VERSION_SUFFIX: ${{ null }}
       run: |
         echo "RELEASE=true" >> $GITHUB_ENV
         echo "VERSION_SUFFIX=" >> $GITHUB_ENV
