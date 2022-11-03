@@ -16,9 +16,18 @@ jobs:
       run: |
         echo "RELEASE=true" >> $GITHUB_ENV
         echo "VERSION_SUFFIX=" >> $GITHUB_ENV
-    - name: 'Check Variables'
-      run: |
-        echo "RELEASE= ${{ env.RELEASE }}"
-        echo "VERSION_SUFFIX= ${{ env.VERSION_SUFFIX }}"
+    - name: 'Should Run Because RELEASE == TRUE'
+      if: (${{ env.RELEASE }} == ${{ true }})
+      run: echo "CORRECT IT IS A RELEASE"
+    - name: 'Should Not Run Because RELEASE == FALSE'
+      if: (${{ env.RELEASE }} == ${{ false }})
+      run: echo "CORRECT IT IS NOT A RELEASE"
       
+      ## TESTING
+    - name: 'MIGHT Run Because RELEASE == TRUE'
+      if: ${{ env.RELEASE }}
+      run: echo "CORRECT IT IS A RELEASE"
+    - name: 'MIGHT Not Run Because RELEASE == FALSE'
+      if: ${{ env.RELASE }}
+      run: echo "CORRECT IT IS NOT A RELEASE"
     
