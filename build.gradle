@@ -12,6 +12,9 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+}
+
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:deprecation"
     options.encoding = 'UTF-8'

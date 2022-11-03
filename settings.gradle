@@ -1,6 +1,5 @@
 pluginManagement {
     repositories {
-        maven { url = 'https://maven.galacticraft.net/repository/gradle/'}
-        gradlePluginPortal()
+        mavenLocal()
     }
 }
