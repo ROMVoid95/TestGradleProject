@@ -32,8 +32,6 @@ dependencies {
     runtimeOnly fg.deobf('mod.dependency:jei:4.16.1.302')
 }
 
-apply from: 'gradle/resources.gradle'
-
 license {
     header = project.file('etc/HEADER')
     properties {
