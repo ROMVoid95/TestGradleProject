@@ -29,7 +29,7 @@ jobs:
     - name: Expose
       run: cp ${{ steps.decode.outputs.filePath }} .
     - name: Create Release
-      if: ${{ env.RELEASE }} == 'true'
+      if: env.RELEASE == 'true'
       uses: softprops/action-gh-release@v1
     - uses: gradle/gradle-build-action@v2
       id: build
