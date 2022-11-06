@@ -3,8 +3,7 @@ on: [push, pull_request]
 jobs:
   build:
     env:
-      COMMIT_MSG: ${{ github.event.head_commit.message }}
-      RELEASE: ${{ false }}
+      RELEASE: false
       VERSION_SUFFIX: -SNAPSHOT
     name: Build
     runs-on: ubuntu-latest
@@ -30,7 +29,7 @@ jobs:
     - name: Expose
       run: cp ${{ steps.decode.outputs.filePath }} .
     - name: Create Release
-      if: ${{ env.RELEASE }} == {{ true }}
+      if: ${{ env.RELEASE }} == 'true'
       uses: softprops/action-gh-release@v1
     - uses: gradle/gradle-build-action@v2
       id: build
