@@ -31,6 +31,8 @@ jobs:
     - name: Create Release
       if: env.RELEASE == 'true'
       uses: softprops/action-gh-release@v1
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
     - uses: gradle/gradle-build-action@v2
       id: build
       with:
