@@ -1,25 +1,57 @@
 plugins {
     id 'java'
-	id 'io.github.romvoid95.base' version '1.0.0'
+    id 'eclipse'
+    id 'io.freefair.lombok' version '6.5.0.2'
+    id 'org.cadixdev.licenser' version '0.6.1'
+    id 'net.galacticraft.internal.legacy.defaults' version '1.0.0'
 }
-
-group = 'io.github.romvoid95'
-version = '1.0.0'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
-repositories {
-    mavenCentral()
+group = "dev.galacticraft"
+archivesBaseName = "Galacticraft"
+version = "${mod_version}${version_suffix}"
+
+configurations {
+    compileOnly.extendsFrom compileRequire
 }
 
 dependencies {
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+
+    compileRequire fg.deobf('mod.dependency:mekanism:9.8.3.390')
+    compileRequire fg.deobf('mod.dependency:industrialcraft-2:2.8.222-ex112')
+    compileRequire fg.deobf('mod.dependency:buildcraft-api:7.99.24.8')
+    compileOnly fg.deobf('mod.dependency:biomes-o-plenty:7.0.1.2445')
+    compileOnly fg.deobf('mod.dependency:appliedenergistics2:rv6-stable-7')
+    compileOnly fg.deobf('mod.dependency:redstoneflux:2.1.1.1')
+    compileOnly fg.deobf('mod.dependency:actuallyadditions:r152')
+    compileOnly fg.deobf('mod.dependency:playerapi:1.1')
+    compileOnly fg.deobf('mod.dependency:journeymap:5.7.1')
+    compileOnly fg.deobf('mod.dependency:jei:4.16.1.302:api')
+    runtimeOnly fg.deobf('mod.dependency:jei:4.16.1.302')
 }
 
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:deprecation"
-    options.encoding = 'UTF-8'
+apply from: 'gradle/resources.gradle'
+
+license {
+    header = project.file('etc/HEADER')
+    properties {
+        company = 'Team Galacticraft'
+        year = Calendar.getInstance().get(Calendar.YEAR);
+    }
+    ignoreFailures = true
+    include '**/*.java'
 }
 
-dependencies {
-
+clean {
+    def filteredDelete = new HashSet<>()
+    for (def toDelete : getDelete()) {
+        for (def f : file(toDelete).listFiles()) {
+            if (f.getName() != "fg_cache") {
+                filteredDelete.add(f)
+            }
+        }
+    }
+    setDelete(filteredDelete)
 }
