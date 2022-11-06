@@ -40,9 +40,10 @@ jobs:
     - name: 'Deploy to Nexus'
       if: steps.build.outcome == 'success'
       uses: gradle/gradle-build-action@v2
+      env:
+        TEAMGC.NEXUS_USERNAME: ${{ secrets.NEXUS_USER }} 
+        TEAMGC.NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       with:
         arguments: |
           publishToGalacticMaven
           -pversion_suffix=${{ env.VERSION_SUFFIX }}
-          -Pteamgc.nexus.user=${{ secrets.NEXUS_USER }} 
-          -Pteamgc.nexus.password=${{ secrets.NEXUS_PASSWORD }}
