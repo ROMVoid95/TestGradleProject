@@ -14,6 +14,7 @@ run
 /target
 *.com
 *.class
+!etc/**/*.class
 *.dll
 *.exe
 *.o
