@@ -1,13 +1,10 @@
 name: 'CI'
 on: [push, pull_request]
 
-env:
-  MSG: github.event.head_commit.message
-  
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    if: "!startsWith($MSG, 'ci') || !contains($MSG, '(github)')"
+    if: startsWith(github.event.head_commit.message, 'ci') == 'false'
     steps:
     - run: echo RAN
