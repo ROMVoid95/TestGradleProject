@@ -5,6 +5,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    if: startsWith(github.event.head_commit.message, 'ci') == 'false'
+    if: ${{!startsWith(github.event.head_commit.message, 'ci')}}
     steps:
-    - run: echo RAN
+    - name: Check if DOES NOT startwith
+      run: echo ${{!startsWith(github.event.head_commit.message, 'ci')}}
